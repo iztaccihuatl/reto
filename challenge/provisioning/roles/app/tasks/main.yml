@@ -1,0 +1,18 @@
+---
+# This playbook contains all actions that will be run on "local" host.
+
+
+- name: Copy "docker" folder across
+  copy:
+    src: "{{ playbook_dir }}/../docker/"
+    dest: "{{ docker_remote_app_dir }}"
+  tags:
+    - app
+
+
+- name: Build images defined in docker-compose file and (re)start containers 
+  command: docker-compose up -d --build --scale web=2
+  args:
+    chdir: "{{ docker_remote_app_dir }}"
+  tags:
+    - app

@@ -1,0 +1,9 @@
+---
+# Variables listed here are applicable to "setup" role
+
+ansible_python_interpreter: /usr/bin/python2.7
+
+remote_user: gerard
+docker_group: docker
+
+docker_remote_app_dir: /tmp/challenge

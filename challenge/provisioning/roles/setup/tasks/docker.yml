@@ -1,0 +1,53 @@
+---
+- name: Add docker repo
+  get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker-ce.repo
+  become: yes
+  tags:
+      - docker
+
+- name: Add EPEL yum repo
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+  tags:
+    -docker
+
+- name: Installing latest docker ce version
+  yum:
+      name: docker-ce
+      state: present
+      update_cache: yes
+  tags:
+      - docker
+
+- name: Enable and start docker
+  service:
+       name: docker
+       state: started
+       enabled: yes
+  tags:
+     - docker
+
+- name: Add user gerard to docker group
+  user:
+       name: gerard
+       groups: docker
+       append: yes
+
+- name: Install pip
+  yum:
+      name: python-pip
+      state: present
+
+- name: Install docker-py
+  pip:
+     name: docker-py
+     state: present
+
+- name: Install docker-compose
+  yum:
+      name: docker-compose
+      state: present

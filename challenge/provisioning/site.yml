@@ -1,0 +1,18 @@
+---
+# This playbook sets up whole stack.
+
+- name: Configurations to the remote Docker host
+  hosts: docker1
+  remote_user: gerard
+  become: yes
+  become_method: sudo
+  roles:
+    - setup
+
+- name: Copying Dockerfile file structure to remote Docker host
+  hosts: docker1
+  remote_user: gerard
+  become: yes
+  become_method: sudo
+  roles:
+    - app

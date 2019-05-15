@@ -1,0 +1,21 @@
+---
+# This playbook contains all actions that will be run on the hosts.
+
+- name: Install updates
+  yum:
+    name: '*'
+    state: latest
+  tags:
+    - system
+
+- name: Clean yum cache
+  shell: yum clean all
+  args:
+      warn: false
+  tags:
+    - system
+
+# Import docker tasks
+- name: Import docker tasks
+  include_tasks: docker.yml
+
